@@ -3,11 +3,14 @@ package test.com.cjpowered.learn.inventory;
 import static org.junit.Assert.*;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
+import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.InventoryManager;
+import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
 
 /*
@@ -26,7 +29,13 @@ public class InventoryTest {
     @Test
     public void whenNoStockItemsDoNotOrder() {
         // given
-        
+        @SuppressWarnings("unused")
+        final InventoryDatabase fakeDb = new DatabaseTemplate() {
+            @Override
+            public List<Item> stockItems() {
+                return Collections.emptyList();
+            }
+        };
         final InventoryManager im = new InventoryManager();
 
         // when

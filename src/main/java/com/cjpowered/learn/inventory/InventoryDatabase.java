@@ -3,14 +3,7 @@ package com.cjpowered.learn.inventory;
 import java.time.LocalDate;
 import java.util.List;
 
-public interface Database {
-
-    /**
-     * Fetch list of all stocked items.
-     *
-     * @return fetched value
-     */
-    List<Item> items();
+public interface InventoryDatabase {
 
     /**
      * Fetch number on-hand.
@@ -41,5 +34,12 @@ public interface Database {
      * @return fetched value
      */
     Season season(LocalDate when);
+
+    /**
+     * Fetch list of all stocked items.
+     *
+     * @return fetched value
+     */
+    List<Item> stockItems();
 
 }
