@@ -2,7 +2,7 @@
 
 _CJ Powered_
 
-Application to teach object-oriented programming and test-driven
+Sample application for learning object-oriented programming and test-driven
 design.
 
 
