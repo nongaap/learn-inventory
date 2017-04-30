@@ -1,4 +1,4 @@
-package com.cjpowered.learn.inventory;
+package test.com.cjpowered.learn.inventory;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
