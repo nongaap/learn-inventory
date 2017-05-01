@@ -27,9 +27,9 @@ put together a Java interface `MarketingInfo` we will use to integrate
 with them.
 
 Before you got here, the ordering department and marketing department
-developers put together a skeleton of the application. Good thing you're
-here, though; they need to get back to their own development projects as
-quickly as possible.
+developers put together a skeleton of the application, a classs called
+`AceInventoryManager`. Good thing you're here, though; they need to get
+back to their own development projects as quickly as possible.
 
 Use the other department's offerings as much as you need. If you can show
 where any of those interfaces are insufficient, don't hesitate to ask for
