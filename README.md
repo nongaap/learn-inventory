@@ -1,4 +1,4 @@
-# Learn Inventory
+# Inventory
 
 _CJ Powered_
 
@@ -22,7 +22,7 @@ the database they've been using to manually track items and levels,
 Some of the rules involve information from the marketing department,
 including information about items on sale and seasons. Their developers
 put together a Java interface `MarketingInfo` we will use to integrate
-with them. 
+with them.
 
 Before you got here, the ordering department and marketing department
 developers put together a skeleton of the application. Good thing you're
