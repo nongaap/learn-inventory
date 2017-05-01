@@ -57,8 +57,8 @@ the code, refactor if you like, commit the code. Never refactor when you are
 not passing
 - Don't forget to test your edge cases. Each feature may require several unit
 tests
-- Never write code that is not required by a test. That is a sure way to
-end up with code not covered by tests
+- Only right code that is necessary to pass tests. That way you ensure your
+tests cover a high proportion of your code
 - Don't let requirements changes throw you. Keep focused on the current
 feature, no matter how the requirements change. Keep working on features in
 priority order even if that priority changes
