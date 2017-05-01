@@ -10,12 +10,12 @@ public class MarketingTemplate implements MarketingInfo {
 
     @Override
     public boolean onSale(final Item item) {
-        throw new UnsupportedOperationException("NYI");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public Season season(final LocalDate when) {
-        throw new UnsupportedOperationException("NYI");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 }
