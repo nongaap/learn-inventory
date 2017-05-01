@@ -31,7 +31,7 @@ developers put together a skeleton of the application, a classs called
 `AceInventoryManager`. Good thing you're here, though; they need to get
 back to their own development projects as quickly as possible.
 
-Use the other department's offerings as much as you need. If you can show
+Use the other departments' offerings as much as you need. If you can show
 where any of those interfaces are insufficient, don't hesitate to ask for
 interface changes. They will review any requests and enhance the interfaces
 if necessary.
@@ -57,7 +57,7 @@ the code, refactor if you like, commit the code. Never refactor when you are
 not passing
 - Don't forget to test your edge cases. Each feature may require several unit
 tests
-- Only right code that is necessary to pass tests. That way you ensure your
+- Only write code that is necessary to pass tests. That way you ensure your
 tests cover a high proportion of your code
 - Don't let requirements changes throw you. Keep focused on the current
 feature, no matter how the requirements change. Keep working on features in
