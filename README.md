@@ -41,9 +41,12 @@ if necessary.
 
 0. Clone this repo and get your development environment working. You will
 know it's all working when you can run the existing unit test suite.
+0. _Bonus: have travis-ci.org automatically build and test your clone_
+  - sign up to travis-ci.org if you haven't already
+  - activate your repository on the Travis-CI website
+  - replace the badge in this readme
 0. Start working on the rules as if they are new features, one-by-one.
 0. You may be advised of new rules or changes to the rules as you progress.
-
 
 ## Tips for Success
 
