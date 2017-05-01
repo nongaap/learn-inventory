@@ -1,6 +1,6 @@
 # Inventory
 
-_CJ Powered_
+[_CJ Powered_](https://engineering.cj.com)
 
 Sample application for learning object-oriented programming and test-driven
 design.
