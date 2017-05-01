@@ -9,12 +9,12 @@ public class DatabaseTemplate implements InventoryDatabase {
 
     @Override
     public int onHand(final Item item) {
-        throw new UnsupportedOperationException("NYI");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
     @Override
     public List<Item> stockItems() {
-        throw new UnsupportedOperationException("NYI");
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 
 }
