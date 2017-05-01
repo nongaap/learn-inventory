@@ -15,14 +15,9 @@ import com.cjpowered.learn.inventory.Order;
 import com.cjpowered.learn.inventory.ace.AceInventoryManager;
 
 /*
- * We need to keep items in stock to prevent back orders.
+ * We need to keep items in stock to prevent back orders. See the README.md
+ * for the requirements.
  *
- * 1. For each item we stock, order enough to bring the quantity on hand to its specified inventory level
- * 2. When an item goes on sale, keep an additional 20 items on hand
- * 3. For seasonal items, keep double the normal inventory on hand during the high-demand period
- * 4. When the required inventory level is above normal, use the highest calculated level
- * 5. some items can only be ordered on the first day of the month
- * 6. some items can only be ordered in packages containing multiple items
  */
 
 public class InventoryTest {
