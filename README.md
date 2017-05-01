@@ -60,7 +60,7 @@ priority order even if that priority changes.
 
 ## The Business Rules
 
-We need the system. Here is the company's best shot at the inventory rules
+Here is the company's best shot at the inventory rules
 you should implement. As mentioned, they are sure to discover other rules or
 even change their minds as you give them more and more working code.
 
