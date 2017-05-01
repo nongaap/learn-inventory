@@ -1,4 +1,4 @@
-package com.cjpowered.learn.inventory;
+package com.cjpowered.learn.marketing;
 
 public enum Season {
     Fall, Spring, Summer, Winter;

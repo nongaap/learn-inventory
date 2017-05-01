@@ -12,6 +12,7 @@ import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.InventoryManager;
 import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
+import com.cjpowered.learn.inventory.ace.AceInventoryManager;
 
 /*
  * We need to keep items in stock to prevent back orders.
@@ -36,7 +37,7 @@ public class InventoryTest {
                 return Collections.emptyList();
             }
         };
-        final InventoryManager im = new InventoryManager();
+        final InventoryManager im = new AceInventoryManager();
 
         // when
         final LocalDate today = LocalDate.now();

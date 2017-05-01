@@ -1,6 +1,5 @@
 package com.cjpowered.learn.inventory;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface InventoryDatabase {
@@ -14,26 +13,6 @@ public interface InventoryDatabase {
      * @return fetched value
      */
     int onHand(Item item);
-
-    /**
-     * Fetch on-sale status.
-     *
-     * @param item
-     *            item to query
-     *
-     * @return fetched value
-     */
-    boolean onSale(Item item);
-
-    /**
-     * Fetch the season
-     *
-     * @param when
-     *            date to query
-     *
-     * @return fetched value
-     */
-    Season season(LocalDate when);
 
     /**
      * Fetch list of all stocked items.
