@@ -57,7 +57,7 @@ the code, refactor if you like, commit the code. Never refactor when you are
 not passing
 - Don't forget to test your edge cases. Each feature may require several unit
 tests
-- Only right code that is necessary to pass tests. That way you ensure your
+- Only write code that is necessary to pass tests. That way you ensure your
 tests cover a high proportion of your code
 - Don't let requirements changes throw you. Keep focused on the current
 feature, no matter how the requirements change. Keep working on features in
@@ -85,8 +85,3 @@ level
 any orders for those items except on the first of the month
 0. some items can only be ordered in packages containing multiple units. we
 can stock more than the normal inventory level for those items if necessary
-
-
-
-
-
