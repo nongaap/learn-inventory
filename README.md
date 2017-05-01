@@ -56,7 +56,9 @@ tests
 end up with code not covered by tests
 - Don't let requirements changes throw you. Keep focused on the current
 feature, no matter how the requirements change. Keep working on features in
-priority order even if that priority changes.
+priority order even if that priority changes
+- If requirements are incomplete or in conflict, your teacher will act as
+the product owner and help clarify
 
 ## The Business Rules
 
