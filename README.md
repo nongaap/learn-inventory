@@ -79,8 +79,9 @@ specified inventory level
 0. When an item goes on sale, keep an additional 20 units on hand
 0. For seasonal items, keep double the normal inventory on hand during the
 high-demand season. Each seasonal item has one high-demand season.
-0. When the required inventory level is above normal, use the highest calculated
-level
+0. When the required inventory level is above normal due to a sale, season,
+or other reason, use the highest calculated level. In other words, modifiers
+do not stack
 0. Some items can only be ordered on the first day of the month, do not issue
 any orders for those items except on the first of the month
 0. Some items can only be ordered in packages containing multiple units. we
