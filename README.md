@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/cjlearn/learn-inventory.svg?branch=master)](https://travis-ci.org/cjlearn/learn-inventory)
+[![Build Status](https://travis-ci.org/nongaap/learn-inventory.svg?branch=master)](https://travis-ci.org/nongaap/learn-inventory)
 
 # Inventory
 
