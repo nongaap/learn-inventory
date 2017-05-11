@@ -1,26 +1,30 @@
 package com.cjpowered.learn.inventory;
 
-import com.cjpowered.learn.marketing.Season;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import com.cjpowered.learn.marketing.MarketingInfo;
 
 public class StockedItem implements Item {
 
 	private final int wantOnHand;
 	
-	private final Season season;
-	
-	public StockedItem(int wantOnHand, final Season season) {
+	public StockedItem(int wantOnHand) {
 		this.wantOnHand = wantOnHand;
-		this.season = season;
 	}
-	
+
 	@Override
-	public int wantOnHand() {
-		return wantOnHand;
+	public Order createOrder(final LocalDate when, final InventoryDatabase database, final MarketingInfo marketingInfo) {
+		
+		final int onHand = database.onHand(this);
+		final boolean onSale = marketingInfo.onSale(this);
+		final int toOrder;
+		if (onSale) {
+			toOrder = wantOnHand + 20 - onHand;
+		} else {
+			toOrder = wantOnHand - onHand;
+		}
+		return new Order(this, toOrder);
 	}
-	
-	@Override
-	public Season season() {
-		return season;
-	}
-	
+
 }

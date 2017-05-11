@@ -15,6 +15,7 @@ import com.cjpowered.learn.inventory.InventoryDatabase;
 import com.cjpowered.learn.inventory.InventoryManager;
 import com.cjpowered.learn.inventory.Item;
 import com.cjpowered.learn.inventory.Order;
+import com.cjpowered.learn.inventory.SeasonalItem;
 import com.cjpowered.learn.inventory.StockedItem;
 import com.cjpowered.learn.inventory.ace.AceInventoryManager;
 import com.cjpowered.learn.marketing.MarketingInfo;
@@ -45,7 +46,7 @@ public class InventoryTest {
     		}
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -63,7 +64,7 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -82,7 +83,7 @@ public class InventoryTest {
     		}
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -103,7 +104,7 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -114,7 +115,7 @@ public class InventoryTest {
     		}
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -135,7 +136,7 @@ public class InventoryTest {
     	// given
     	final int onHand = 20;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -154,7 +155,7 @@ public class InventoryTest {
     		}
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -172,7 +173,7 @@ public class InventoryTest {
     	// given
     	final int onHand = 16;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -192,7 +193,7 @@ public class InventoryTest {
     		
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -203,7 +204,6 @@ public class InventoryTest {
     	
     	// then
     	assertEquals(0, actual.size());
-
     }
     
     @Test
@@ -211,7 +211,7 @@ public class InventoryTest {
         // given
     	final boolean itemOnSale = true;
     	final int shouldHave = 30;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final MarketingInfo mi = new MarketingTemplate(){
     		@Override
     		public boolean onSale(Item item) {
@@ -220,7 +220,7 @@ public class InventoryTest {
     		
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
 
@@ -237,7 +237,7 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave, Season.Summer);
+    	Item item = new StockedItem(shouldHave);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -249,7 +249,7 @@ public class InventoryTest {
     		
     		@Override
     		public Season season(LocalDate when) {
-    			return Season.Fall;
+    			return Season.Spring;
     		}
     	};
     	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
@@ -271,7 +271,7 @@ public class InventoryTest {
     	final int onHand = 10;
     	final int shouldHave = 16;
     	final Season season = Season.Summer;
-    	Item item = new StockedItem(shouldHave, season);
+    	Item item = new SeasonalItem(shouldHave, season);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
