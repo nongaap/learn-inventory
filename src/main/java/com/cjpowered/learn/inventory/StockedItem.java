@@ -20,9 +20,9 @@ public class StockedItem implements Item {
 		final boolean onSale = marketingInfo.onSale(this);
 		final int toOrder;
 		if (onSale) {
-			toOrder = wantOnHand + 20 - onHand;
+			toOrder = (wantOnHand + 20 - onHand) > 0 ? wantOnHand + 20 - onHand : 0;
 		} else {
-			toOrder = wantOnHand - onHand;
+			toOrder = (wantOnHand - onHand) > 0? wantOnHand - onHand : 0;
 		}
 		return new Order(this, toOrder);
 	}

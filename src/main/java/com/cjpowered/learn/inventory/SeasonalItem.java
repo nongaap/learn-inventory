@@ -22,12 +22,14 @@ public class SeasonalItem implements Item {
 		final boolean inSeason = season.equals(marketingInfo.season(when));
 		final boolean onSale = marketingInfo.onSale(this);
 		final int toOrder;
+		final int inSeasonAndOnSaleOrder;
 		if(inSeason && onSale){
-			toOrder = ((wantOnHand * 2) - onHand) > (20 + wantOnHand - onHand) ? ((wantOnHand * 2) - onHand) : (20 + wantOnHand - onHand); 
+			inSeasonAndOnSaleOrder = ((wantOnHand * 2) - onHand) > (20 + wantOnHand - onHand) ? ((wantOnHand * 2) - onHand) : (20 + wantOnHand - onHand);
+			toOrder = inSeasonAndOnSaleOrder > 0 ? inSeasonAndOnSaleOrder : 0; 
 		} else if (inSeason) {
-			toOrder = (wantOnHand * 2) - onHand;
+			toOrder = ((wantOnHand * 2) - onHand) > 0 ? (wantOnHand * 2) - onHand : 0;
 		} else {
-			toOrder = wantOnHand - onHand;
+			toOrder = (wantOnHand - onHand) > 0 ? wantOnHand - onHand : 0;
 		}
 		return new Order(this, toOrder);
 		
