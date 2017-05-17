@@ -20,8 +20,11 @@ public class SeasonalItem implements Item {
 	public Order createOrder(final LocalDate when, InventoryDatabase database, MarketingInfo marketingInfo) {
 		final int onHand = database.onHand(this);
 		final boolean inSeason = season.equals(marketingInfo.season(when));
+		final boolean onSale = marketingInfo.onSale(this);
 		final int toOrder;
-		if (inSeason) {
+		if(inSeason && onSale){
+			toOrder = ((wantOnHand * 2) - onHand) > (20 + wantOnHand - onHand) ? ((wantOnHand * 2) - onHand) : (20 + wantOnHand - onHand); 
+		} else if (inSeason) {
 			toOrder = (wantOnHand * 2) - onHand;
 		} else {
 			toOrder = wantOnHand - onHand;
