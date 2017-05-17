@@ -8,6 +8,7 @@ import com.cjpowered.learn.marketing.MarketingInfo;
 public class StockedItem implements Item {
 
 	private final int wantOnHand;
+	
 	private final boolean orderFirstDayOfMonthOnly;
 	
 	public StockedItem(int wantOnHand, boolean orderFirstDayOfMonthOnly) {

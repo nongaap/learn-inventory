@@ -276,7 +276,8 @@ public class InventoryTest {
     	final int onHand = 10;
     	final int shouldHave = 16;
     	final Season season = Season.Summer;
-    	Item item = new SeasonalItem(shouldHave, season);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new SeasonalItem(shouldHave, season, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -309,7 +310,8 @@ public class InventoryTest {
     	final int onHand = 10;
     	final int shouldHave = 16;
     	final Season season = Season.Summer;
-    	Item item = new SeasonalItem(shouldHave, season);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new SeasonalItem(shouldHave, season, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -342,7 +344,8 @@ public class InventoryTest {
     	final int onHand = 50;
     	final int shouldHave = 16;
     	final Season season = Season.Summer;
-    	Item item = new SeasonalItem(shouldHave, season);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new SeasonalItem(shouldHave, season, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -399,5 +402,36 @@ public class InventoryTest {
     }
     
     //First of month order only seasonal item
+    @Test
+    public void onlyOrderFirstDayOfMonthSeasonal(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final Season season = Season.Summer;
+    	final boolean orderFirstDayOfMonthOnly = true;
+    	Item item = new SeasonalItem(shouldHave, season, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final InventoryDatabase db = new FakeDatabase(store);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return false;
+    		}
+    		
+    		@Override
+    		public Season season(LocalDate when) {
+    			return season;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.of(2017,5,2);
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	assertEquals(0, actual.size());
+    }
 
 }
