@@ -8,9 +8,11 @@ import com.cjpowered.learn.marketing.MarketingInfo;
 public class StockedItem implements Item {
 
 	private final int wantOnHand;
+	private final boolean orderFirstDayOfMonthOnly;
 	
-	public StockedItem(int wantOnHand) {
+	public StockedItem(int wantOnHand, boolean orderFirstDayOfMonthOnly) {
 		this.wantOnHand = wantOnHand;
+		this.orderFirstDayOfMonthOnly = orderFirstDayOfMonthOnly;
 	}
 
 	@Override
@@ -18,11 +20,17 @@ public class StockedItem implements Item {
 		
 		final int onHand = database.onHand(this);
 		final boolean onSale = marketingInfo.onSale(this);
+		final boolean firstDayOfMonth = when.getDayOfMonth() == 1;
+		final boolean orderAllowed = orderFirstDayOfMonthOnly ? firstDayOfMonth : true;
 		final int toOrder;
-		if (onSale) {
-			toOrder = (wantOnHand + 20 - onHand) > 0 ? wantOnHand + 20 - onHand : 0;
+		if (orderAllowed){
+			if (onSale) {
+				toOrder = (wantOnHand + 20 - onHand) > 0 ? wantOnHand + 20 - onHand : 0;
+			} else {
+				toOrder = (wantOnHand - onHand) > 0? wantOnHand - onHand : 0;
+			}
 		} else {
-			toOrder = (wantOnHand - onHand) > 0? wantOnHand - onHand : 0;
+			toOrder = 0;
 		}
 		return new Order(this, toOrder);
 	}

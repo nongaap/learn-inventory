@@ -64,7 +64,8 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -104,7 +105,8 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -136,7 +138,8 @@ public class InventoryTest {
     	// given
     	final int onHand = 20;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -173,7 +176,8 @@ public class InventoryTest {
     	// given
     	final int onHand = 16;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -211,7 +215,8 @@ public class InventoryTest {
         // given
     	final boolean itemOnSale = true;
     	final int shouldHave = 30;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final MarketingInfo mi = new MarketingTemplate(){
     		@Override
     		public boolean onSale(Item item) {
@@ -237,7 +242,8 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
-    	Item item = new StockedItem(shouldHave);
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -360,5 +366,38 @@ public class InventoryTest {
     	// then
     	assertEquals(0, actual.size());
     }
+    
+    @Test
+    public void onlyOrderFirstDayOfMonth(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final boolean orderFirstDayOfMonthOnly = true;
+    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final InventoryDatabase db = new FakeDatabase(store);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return false;
+    		}
+    		@Override
+    		public Season season(LocalDate when) {
+    			return Season.Spring;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.of(2017,5,2);
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	assertEquals(0, actual.size());
+    	
+    }
+    
+    //First of month order only seasonal item
 
 }
