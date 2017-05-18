@@ -665,5 +665,42 @@ public class InventoryTest {
     	Set<Order> expected = Collections.singleton(expectedOrder);
     	assertEquals(expected, new HashSet<>(actual));
     }
+    
+    @Test
+    public void orderEnoughStockWithSeasonalStockOnSaleAndAlreadyOnOrder(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
+    	final Season season = Season.Summer;
+    	final int onOrder = 5;
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new SeasonalItem(shouldHave, season, unitsPerPackage, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final HashMap<Item, Integer> onOrderStore = new HashMap<>();
+    	onOrderStore.put(item,  onOrder);
+    	final InventoryDatabase db = new FakeDatabase(store, onOrderStore);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return true;
+    		}
+    		@Override
+    		public Season season(LocalDate when) {
+    			return season;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.now();
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	Order expectedOrder = new Order(item, shouldHave + 20 - onHand - onOrder);
+    	Set<Order> expected = Collections.singleton(expectedOrder);
+    	assertEquals(expected, new HashSet<>(actual));
+    }
 
 }
