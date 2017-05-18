@@ -11,11 +11,14 @@ public class SeasonalItem implements Item {
 	
 	private final int wantOnHand;
 	
+	private final int unitsPerPackage;
+	
 	private final boolean orderFirstDayOfMonthOnly;
 	
-	public SeasonalItem(final int wantOnHand, final Season season, final boolean orderFirstDayOfMonthOnly) {
+	public SeasonalItem(final int wantOnHand, final Season season, int unitsPerPackage, final boolean orderFirstDayOfMonthOnly) {
 		this.season = season;
 		this.wantOnHand = wantOnHand;
+		this.unitsPerPackage = unitsPerPackage;
 		this.orderFirstDayOfMonthOnly = orderFirstDayOfMonthOnly;
 	}
 	
@@ -33,7 +36,8 @@ public class SeasonalItem implements Item {
 				inSeasonAndOnSaleOrder = ((wantOnHand * 2) - onHand) > (20 + wantOnHand - onHand) ? ((wantOnHand * 2) - onHand) : (20 + wantOnHand - onHand);
 				toOrder = inSeasonAndOnSaleOrder > 0 ? inSeasonAndOnSaleOrder : 0; 
 			} else if (inSeason) {
-				toOrder = ((wantOnHand * 2) - onHand) > 0 ? (wantOnHand * 2) - onHand : 0;
+				double packagesToOrder = Math.ceil((double)((wantOnHand * 2) - onHand)/(double) unitsPerPackage);
+				toOrder = ((wantOnHand * 2) - onHand) > 0 ? (int) packagesToOrder * unitsPerPackage : 0;
 			} else {
 				toOrder = (wantOnHand - onHand) > 0 ? wantOnHand - onHand : 0;
 			}
