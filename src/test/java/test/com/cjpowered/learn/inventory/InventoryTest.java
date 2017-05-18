@@ -77,6 +77,10 @@ public class InventoryTest {
     		public List<Item> stockItems() {
     			return Collections.singletonList(item);
     		}
+    		@Override
+    		public int onOrder(Item item) {
+    			return 0;
+    		}
     	};
     	final MarketingInfo marketingInfo = new MarketingTemplate(){
     		@Override
@@ -153,6 +157,11 @@ public class InventoryTest {
     		public List<Item> stockItems() {
     			return Collections.singletonList(item);
     		}
+    		
+    		@Override
+    		public int onOrder(Item item) {
+    			return 0;
+    		}
     	};
     	final MarketingInfo marketingInfo = new MarketingTemplate(){
     		@Override
@@ -191,6 +200,10 @@ public class InventoryTest {
     		@Override
     		public List<Item> stockItems() {
     			return Collections.singletonList(item);
+    		}
+    		@Override
+    		public int onOrder(Item item) {
+    			return 0;
     		}
     	};
     	final MarketingInfo marketingInfo = new MarketingTemplate(){
@@ -615,6 +628,42 @@ public class InventoryTest {
     	Set<Order> expected = Collections.singleton(expectedOrder);
     	assertEquals(expected, new HashSet<>(actual));
     	
+    }
+    
+    @Test
+    public void orderEnoughStockWithStockAlreadyOnOrder(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
+    	final int onOrder = 5;
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final HashMap<Item, Integer> onOrderStore = new HashMap<>();
+    	onOrderStore.put(item,  onOrder);
+    	final InventoryDatabase db = new FakeDatabase(store, onOrderStore);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return false;
+    		}
+    		@Override
+    		public Season season(LocalDate when) {
+    			return Season.Spring;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.now();
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	Order expectedOrder = new Order(item, shouldHave - onHand - onOrder);
+    	Set<Order> expected = Collections.singleton(expectedOrder);
+    	assertEquals(expected, new HashSet<>(actual));
     }
 
 }

@@ -23,17 +23,18 @@ public class StockedItem implements Item {
 	public Order createOrder(final LocalDate when, final InventoryDatabase database, final MarketingInfo marketingInfo) {
 		
 		final int onHand = database.onHand(this);
+		final int onOrder = database.onOrder(this);
 		final boolean onSale = marketingInfo.onSale(this);
 		final boolean firstDayOfMonth = when.getDayOfMonth() == 1;
 		final boolean orderAllowed = orderFirstDayOfMonthOnly ? firstDayOfMonth : true;
 		final int toOrder;
 		if (orderAllowed){
 			if (onSale) {
-				double packagesToOrder = Math.ceil((double)(wantOnHand + 20 - onHand)/(double) unitsPerPackage);
-				toOrder = (wantOnHand + 20 - onHand) > 0 ?  (int) packagesToOrder * unitsPerPackage  : 0;
+				double packagesToOrder = Math.ceil((double)(wantOnHand + 20 - onHand - onOrder)/(double) unitsPerPackage);
+				toOrder = (wantOnHand + 20 - onHand - onOrder) > 0 ?  (int) packagesToOrder * unitsPerPackage  : 0;
 			} else {
-				double packagesToOrder = Math.ceil((double)(wantOnHand - onHand)/(double) unitsPerPackage);
-				toOrder = (wantOnHand - onHand) > 0? (int) packagesToOrder * unitsPerPackage : 0;
+				double packagesToOrder = Math.ceil((double)(wantOnHand - onHand - onOrder)/(double) unitsPerPackage);
+				toOrder = (wantOnHand - onHand - onOrder) > 0? (int) packagesToOrder * unitsPerPackage : 0;
 			}
 		} else {
 			toOrder = 0;
