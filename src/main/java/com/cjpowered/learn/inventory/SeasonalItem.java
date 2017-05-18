@@ -33,8 +33,10 @@ public class SeasonalItem implements Item {
 		final int inSeasonAndOnSaleOrder;
 		if (orderAllowed){
 			if(inSeason && onSale){
-				inSeasonAndOnSaleOrder = ((wantOnHand * 2) - onHand) > (20 + wantOnHand - onHand) ? ((wantOnHand * 2) - onHand) : (20 + wantOnHand - onHand);
-				toOrder = inSeasonAndOnSaleOrder > 0 ? inSeasonAndOnSaleOrder : 0; 
+				double packagesToOrderInSeason = Math.ceil((double)((wantOnHand * 2) - onHand)/(double) unitsPerPackage);
+				double packagesToOrderOnSale = Math.ceil((double)(wantOnHand + 20 - onHand)/(double) unitsPerPackage);
+				inSeasonAndOnSaleOrder = (int) packagesToOrderInSeason > (int) packagesToOrderOnSale ? (int) packagesToOrderInSeason : (int) packagesToOrderOnSale;
+				toOrder = inSeasonAndOnSaleOrder > 0 ? inSeasonAndOnSaleOrder * unitsPerPackage : 0; 
 			} else if (inSeason) {
 				double packagesToOrder = Math.ceil((double)((wantOnHand * 2) - onHand)/(double) unitsPerPackage);
 				toOrder = ((wantOnHand * 2) - onHand) > 0 ? (int) packagesToOrder * unitsPerPackage : 0;
