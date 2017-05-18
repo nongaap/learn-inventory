@@ -9,10 +9,13 @@ public class StockedItem implements Item {
 
 	private final int wantOnHand;
 	
+	private final int unitsPerPackage;
+	
 	private final boolean orderFirstDayOfMonthOnly;
 	
-	public StockedItem(int wantOnHand, boolean orderFirstDayOfMonthOnly) {
+	public StockedItem(int wantOnHand, int unitsPerPackage, boolean orderFirstDayOfMonthOnly) {
 		this.wantOnHand = wantOnHand;
+		this.unitsPerPackage = unitsPerPackage;
 		this.orderFirstDayOfMonthOnly = orderFirstDayOfMonthOnly;
 	}
 
@@ -26,9 +29,10 @@ public class StockedItem implements Item {
 		final int toOrder;
 		if (orderAllowed){
 			if (onSale) {
-				toOrder = (wantOnHand + 20 - onHand) > 0 ? wantOnHand + 20 - onHand : 0;
+				toOrder = (wantOnHand + 20 - onHand) > 0 ? (int) Math.ceil((wantOnHand + 20 - onHand)/unitsPerPackage) * unitsPerPackage : 0;
 			} else {
-				toOrder = (wantOnHand - onHand) > 0? wantOnHand - onHand : 0;
+				double packagesToOrder = Math.ceil((double)(wantOnHand - onHand)/(double) unitsPerPackage);
+				toOrder = (wantOnHand - onHand) > 0? (int) packagesToOrder * unitsPerPackage : 0;
 			}
 		} else {
 			toOrder = 0;

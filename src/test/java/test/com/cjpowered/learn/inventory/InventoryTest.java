@@ -64,8 +64,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -105,8 +106,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -138,8 +140,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 20;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -176,8 +179,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 16;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final InventoryDatabase db = new DatabaseTemplate(){
     		@Override
     		public int onHand(Item item) {
@@ -215,8 +219,9 @@ public class InventoryTest {
         // given
     	final boolean itemOnSale = true;
     	final int shouldHave = 30;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final MarketingInfo mi = new MarketingTemplate(){
     		@Override
     		public boolean onSale(Item item) {
@@ -242,8 +247,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = false;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -375,8 +381,9 @@ public class InventoryTest {
     	// given
     	final int onHand = 10;
     	final int shouldHave = 16;
+    	final int unitsPerPackage = 1;
     	final boolean orderFirstDayOfMonthOnly = true;
-    	Item item = new StockedItem(shouldHave, orderFirstDayOfMonthOnly);
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
     	final HashMap<Item, Integer> store = new HashMap<>();
     	store.put(item,  onHand);
     	final InventoryDatabase db = new FakeDatabase(store);
@@ -401,7 +408,6 @@ public class InventoryTest {
     	
     }
     
-    //First of month order only seasonal item
     @Test
     public void onlyOrderFirstDayOfMonthSeasonal(){
     	// given
@@ -432,6 +438,40 @@ public class InventoryTest {
     	
     	// then
     	assertEquals(0, actual.size());
+    }
+    
+    @Test
+    public void orderEnoughStockWhenPackageContainsMultipleUnits(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final int unitsPerPackage = 4;
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new StockedItem(shouldHave, unitsPerPackage, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final InventoryDatabase db = new FakeDatabase(store);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return false;
+    		}
+    		@Override
+    		public Season season(LocalDate when) {
+    			return Season.Spring;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.now();
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	Order expectedOrder = new Order(item, 8);
+    	Set<Order> expected = Collections.singleton(expectedOrder);
+    	assertEquals(expected, new HashSet<>(actual));
+    	
     }
 
 }
