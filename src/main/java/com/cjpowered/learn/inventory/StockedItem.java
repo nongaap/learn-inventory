@@ -29,7 +29,8 @@ public class StockedItem implements Item {
 		final int toOrder;
 		if (orderAllowed){
 			if (onSale) {
-				toOrder = (wantOnHand + 20 - onHand) > 0 ? (int) Math.ceil((wantOnHand + 20 - onHand)/unitsPerPackage) * unitsPerPackage : 0;
+				double packagesToOrder = Math.ceil((double)(wantOnHand + 20 - onHand)/(double) unitsPerPackage);
+				toOrder = (wantOnHand + 20 - onHand) > 0 ?  (int) packagesToOrder * unitsPerPackage  : 0;
 			} else {
 				double packagesToOrder = Math.ceil((double)(wantOnHand - onHand)/(double) unitsPerPackage);
 				toOrder = (wantOnHand - onHand) > 0? (int) packagesToOrder * unitsPerPackage : 0;
