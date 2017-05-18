@@ -547,7 +547,40 @@ public class InventoryTest {
     	
     }
     
-    // not on sale and not in season, multiple packages
+    @Test
+    public void orderEnoughSeasonalStockWhenPackageContainsMultipleUnitsAndNotInSeason(){
+    	// given
+    	final int onHand = 10;
+    	final int shouldHave = 16;
+    	final int unitsPerPackage = 4;
+    	final Season season = Season.Summer;
+    	final boolean orderFirstDayOfMonthOnly = false;
+    	Item item = new SeasonalItem(shouldHave, season, unitsPerPackage, orderFirstDayOfMonthOnly);
+    	final HashMap<Item, Integer> store = new HashMap<>();
+    	store.put(item,  onHand);
+    	final InventoryDatabase db = new FakeDatabase(store);
+    	final MarketingInfo marketingInfo = new MarketingTemplate(){
+    		@Override
+    		public boolean onSale(Item item) {
+    			return false;
+    		}
+    		@Override
+    		public Season season(LocalDate when) {
+    			return Season.Spring;
+    		}
+    	};
+    	final InventoryManager im = new AceInventoryManager(db, marketingInfo);
+    	final LocalDate today = LocalDate.now();
+    	
+    	// when
+    	final List<Order> actual = im.getOrders(today);
+    	
+    	// then
+    	Order expectedOrder = new Order(item, 8);
+    	Set<Order> expected = Collections.singleton(expectedOrder);
+    	assertEquals(expected, new HashSet<>(actual));
+    	
+    }
     //on sale and in seasonal, multiple packages
 
 }

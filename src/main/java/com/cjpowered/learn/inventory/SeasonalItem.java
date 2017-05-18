@@ -39,7 +39,8 @@ public class SeasonalItem implements Item {
 				double packagesToOrder = Math.ceil((double)((wantOnHand * 2) - onHand)/(double) unitsPerPackage);
 				toOrder = ((wantOnHand * 2) - onHand) > 0 ? (int) packagesToOrder * unitsPerPackage : 0;
 			} else {
-				toOrder = (wantOnHand - onHand) > 0 ? wantOnHand - onHand : 0;
+				double packagesToOrder = Math.ceil((double)(wantOnHand - onHand)/(double) unitsPerPackage);
+				toOrder = (wantOnHand - onHand) > 0 ? (int) packagesToOrder * unitsPerPackage : 0;
 			}
 		}  else {
 			toOrder = 0;
